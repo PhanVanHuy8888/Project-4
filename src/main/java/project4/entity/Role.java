@@ -1,20 +1,16 @@
 package project4.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-public class Role {
-    @Id
-    private String name;
+import java.util.HashSet;
+import java.util.Set;
 
-    private String description;
+public class Role {
 
 }
