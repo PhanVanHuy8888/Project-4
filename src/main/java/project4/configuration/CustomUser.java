@@ -7,6 +7,7 @@ import project4.entity.User;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class CustomUser implements UserDetails {
 
@@ -18,8 +19,9 @@ public class CustomUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
-        return Arrays.asList(authority);
+        return user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority( "ROLE_" + role.getName()))
+                .collect(Collectors.toList());
     }
 
     @Override

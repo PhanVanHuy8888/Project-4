@@ -15,6 +15,7 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
+    mode: HTML
   jackson:
     date-format: yyyy-MM-dd
     time-zone: UTC

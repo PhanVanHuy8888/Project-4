@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
     @GetMapping("/home")
-    public String index() {
+    public String home() {
         return "admin/index";
+    }
+
+    @GetMapping("/index")
+    public String index() {
+        return "index";
     }
 
     @GetMapping("/signin")
@@ -20,6 +25,12 @@ public class HomeController {
     @GetMapping("/register")
     public String register() {
         return "register";
+    }
+
+
+    @GetMapping("/access-denied")
+    public String error() {
+        return "error-403";
     }
 
 }

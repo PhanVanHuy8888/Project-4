@@ -22,9 +22,9 @@ public class AuthSucessHandlerImpl implements AuthenticationSuccessHandler {
         Set<String> roles = AuthorityUtils.authorityListToSet(authorities);
 
         if(roles.contains("ROLE_USER")){
-            response.sendRedirect("/home");
+            response.sendRedirect("/chocolate/index");
         }else {
-            response.sendRedirect("/");
+            response.sendRedirect("/chocolate/home");
         }
     }
 }

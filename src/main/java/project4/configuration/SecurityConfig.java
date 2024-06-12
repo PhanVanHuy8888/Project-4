@@ -30,18 +30,18 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable())
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/users").permitAll()
-                        .requestMatchers("/roles").permitAll()
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/users/**").hasRole("ADMIN")
 
                         .requestMatchers("/", "/home", "/register", "/signin").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form->form.loginPage("/signin")
-                        .loginProcessingUrl("/login")
+                        .loginProcessingUrl("/logins")
                         .defaultSuccessUrl("/home", true)
                         .successHandler(authenticationSuccessHandler)
                 )
-                .logout(logout->logout.permitAll());
+                .logout(logout->logout.permitAll())
+                .exceptionHandling(e -> e.accessDeniedPage("/access-denied"));
 
         return http.build();
     }

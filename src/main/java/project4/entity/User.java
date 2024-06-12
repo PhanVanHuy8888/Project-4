@@ -34,6 +34,7 @@ public class User {
 
     private String gender;
 
-    private String role;
+    @ManyToMany()
+    Set<Role> roles;
 
 }

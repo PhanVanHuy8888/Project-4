@@ -2,6 +2,7 @@ package project4.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import project4.dto.response.UserResponse;
 import project4.entity.User;
 import project4.mapper.UserMapper;
 
+import project4.repository.RoleRepo;
 import project4.repository.UserRepo;
 
 import java.util.HashSet;
@@ -20,6 +22,9 @@ public class UserService {
 
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private RoleRepo roleRepo;
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -31,17 +36,21 @@ public class UserService {
 
         User user = userMapper.createUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(request.getRole());
+        var roles = roleRepo.findAllById(request.getRoles());
+        user.setRoles(new HashSet<>(roles));
         return userMapper.toUserResponse(userRepo.save(user));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public UserResponse updateUser(String id, UserRequest request) {
         User user = userRepo.findById(id).orElseThrow(() ->  new RuntimeException("User not found by id=" + id));
         userMapper.updateUser(user, request);
-        user.setRole(request.getRole());
+        var roles = roleRepo.findAllById(request.getRoles());
+        user.setRoles(new HashSet<>(roles));
         return  userMapper.toUserResponse(userRepo.save(user));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getAllUser() {
         return userRepo.findAll().stream().map(userMapper::toUserResponse).toList();
     }

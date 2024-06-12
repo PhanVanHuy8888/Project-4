@@ -11,6 +11,13 @@ import lombok.NoArgsConstructor;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Role {
+    @Id
+    String name;
 
+    String description;
 }

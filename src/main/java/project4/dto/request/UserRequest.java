@@ -28,6 +28,6 @@ public class UserRequest {
 
     private String gender;
 
-    private String role;
+    private List<String> roles;
 
 }
