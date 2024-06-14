@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project4.dto.request.*;
 import project4.dto.response.UserResponse;
+import project4.entity.Role;
 import project4.entity.User;
 import project4.mapper.UserMapper;
 
@@ -16,6 +17,7 @@ import project4.repository.UserRepo;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -36,8 +38,19 @@ public class UserService {
 
         User user = userMapper.createUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        var roles = roleRepo.findAllById(request.getRoles());
-        user.setRoles(new HashSet<>(roles));
+        Set<Role> roles = new HashSet<>();
+        if(request.getRoles() == null || request.getRoles().isEmpty()){
+            Role defautRole = roleRepo.findByName("USER");
+            if(defautRole != null ) {
+                roles.add(defautRole);
+            }
+        }else {
+            for (String roleName : request.getRoles()){
+                Role role = roleRepo.findByName(roleName);
+                if(role != null) roles.add(role);
+            }
+        }
+        user.setRoles(roles);
         return userMapper.toUserResponse(userRepo.save(user));
     }
 

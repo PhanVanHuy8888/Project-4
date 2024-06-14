@@ -6,7 +6,7 @@
 
     <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="/chocolate/assets/img/favicon.png">
-    <!--     Fonts and icons     -->
+    <!-- Fonts and icons -->
     <link rel="stylesheet" type="text/css"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"/>
     <!-- Nucleo Icons -->
@@ -20,34 +20,49 @@
     <link id="pagestyle" href="/chocolate/assets/css/material-dashboard.css?v=3.1.0" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-</head>
-<body class="g-sidenav-show  bg-gray-100">
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3
-    bg-gradient-dark" id="sidenav-main">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchUsers();
+        });
 
+        async function fetchUsers() {
+            const response = await fetch('/chocolate/users/listUser');
+            const users = await response.json();
+            const tableBody = document.getElementById('userTableBody');
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            users.forEach((user, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="text-center">${index + 1}</td>
+                    <td class="text-center">${user.userName}</td>
+                    <td class="text-center">${user.email}</td>
+                    <td class="text-center">${user.gender}</td>
+                    <td class="text-center">
+                        <!-- Add actions if needed -->
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    </script>
+</head>
+<body class="g-sidenav-show bg-gray-100">
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark" id="sidenav-main">
     <div th:include="admin/aside :: div"></div>
 </aside>
-<main class="main-content border-radius-lg ">
-
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
-         data-scroll="true">
+<main class="main-content border-radius-lg">
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
         <div class="container-fluid py-1 px-3">
-
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-
                     <div style="margin-top: 20px;" class="input-group input-group-outline">
                         <label class="form-label">Tìm kiếm...</label>
                         <input style="height: 40px;" type="text" class="form-control">
-                        <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass"
-                                                                         aria-hidden="true"></i>
-                        </button>
+                        <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
                     </div>
-
                 </div>
-                <ul class="navbar-nav  justify-content-end">
-
-
+                <ul class="navbar-nav justify-content-end">
                     <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                         <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
                             <div class="sidenav-toggler-inner">
@@ -63,12 +78,9 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                        <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton"
-                           data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-bell cursor-pointer"></i>
                         </a>
-
-
                     </li>
                     <li class="ms-2 nav-item d-flex align-items-center">
                         <a href="./pages/sign-in.html" class="nav-link text-body font-weight-bold px-0">
@@ -83,7 +95,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="card my-4">
-
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="mb-3 mt-2">
                             <a href="createUser" class="btn btn-primary">Thêm mới</a>
@@ -97,39 +108,15 @@
                             <table class="table align-items-center mb-0">
                                 <thead>
                                 <tr>
-                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7">#
-                                    </th>
-                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Tên
-                                    </th>
-                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Email
-                                    </th>
-                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Giới tính
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Thao tác
-                                    </th>
-
+                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7">#</th>
+                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tên</th>
+                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Giới tính</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Thao tác</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr th:each="user, i: ${lstUser}">
-                                    <td class="text-center" th:text="${i.index + 1}">
-                                    </td>
-                                    <td class="text-center" th:text="${user.lastName}">
-                                    </td>
-                                    <td class="text-center" th:text="${user.email}">
-                                    </td>
-                                    <td class="text-center" th:text="${user.gender}">
-                                    </td>
-                                    <td class="text-center">
-<!--                                        <a th:href="@{'editCate/' + ${c.id}}" class="btn btn-primary">Edit</a>-->
-<!--                                        <a th:href="@{'deleteCate/' + ${c.id}}" class="btn btn-danger">Delete</a>-->
-                                    </td>
-                                </tr>
-
+                                <tbody id="userTableBody">
+                                <!-- Rows will be populated by JavaScript -->
                                 </tbody>
                             </table>
                         </div>

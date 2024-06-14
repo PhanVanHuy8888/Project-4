@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class UserRequest {
@@ -28,6 +29,6 @@ public class UserRequest {
 
     private String gender;
 
-    private List<String> roles;
+    private Set<String> roles;
 
 }
