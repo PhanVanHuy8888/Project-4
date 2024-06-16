@@ -2,30 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <base href="/chocolate/">
-    <link rel="apple-touch-icon" sizes="76x76" href="/chocolate/assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="/chocolate/assets/img/favicon.png">
+    <title>Home</title>
+    <link rel="apple-touch-icon" sizes="76x76" href="/Views/static/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="/Views/static/assets/img/favicon.png">
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"/>
     <!-- Nucleo Icons -->
-    <link href="/chocolate/assets/css/nucleo-icons.css" rel="stylesheet"/>
-    <link href="/chocolate/assets/css/nucleo-svg.css" rel="stylesheet"/>
+    <link href="/Views/static/assets/css/nucleo-icons.css" rel="stylesheet"/>
+    <link href="/Views/static/assets/css/nucleo-svg.css" rel="stylesheet"/>
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
-    <link id="pagestyle" href="/chocolate/assets/css/material-dashboard.css?v=3.1.0" rel="stylesheet"/>
+    <link id="pagestyle" href="/Views/static/assets/css/material-dashboard.css?v=3.1.0" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 </head>
 <body class="g-sidenav-show  bg-gray-100">
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3
     bg-gradient-dark" id="sidenav-main">
-
-    <div th:include="admin/aside :: div"></div>
 </aside>
 <main class="main-content border-radius-lg ">
     <!-- Navbar -->
@@ -341,6 +338,16 @@
         </div>
     </div>
 </div>
-
+<script>
+    // Load aside.html content into the aside element
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('aside.html')
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('aside').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading aside.html:', error));
+    });
+</script>
 </body>
 </html>
