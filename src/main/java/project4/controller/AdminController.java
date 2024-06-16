@@ -11,6 +11,11 @@ public class AdminController {
         return "admin/createUser";
     }
 
+    @GetMapping("/editUser")
+    public String editUser() {
+        return "admin/editUser";
+    }
+
     @GetMapping("/listUser")
     public String getAllUser() {
         return "admin/listUser";

@@ -38,13 +38,43 @@
                     <td class="text-center">${user.userName}</td>
                     <td class="text-center">${user.email}</td>
                     <td class="text-center">${user.gender}</td>
+                    <td class="text-center">${user.birthday}</td>
                     <td class="text-center">
-                        <!-- Add actions if needed -->
+                        <button class="btn btn-primary" onclick="updateUser('${user.id}')">Sửa</button>
+                        <button class="btn btn-danger" onclick="deleteUser('${user.id}')">Xóa</button>
                     </td>
                 `;
                 tableBody.appendChild(row);
             });
         }
+
+        async function deleteUser(id) {
+            console.log('User ID to delete:', id);
+            if (confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) {
+                try {
+                    const response = await fetch(`/chocolate/users/${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        alert()
+                        alert('User has been deleted');
+                        fetchUsers(); // Refresh the list
+                    } else {
+                        const errorMessage = await response.text();
+                        alert('Error deleting user: ' + errorMessage);
+                    }
+                } catch (error) {
+                    console.error('Error deleting user:', error);
+                    alert('Error deleting user: ' + error.message);
+                }
+            }
+        }
+
+        async function updateUser(userId) {
+            window.location.href = `/chocolate/editUser?id=${userId}`;
+        }
+
     </script>
 </head>
 <body class="g-sidenav-show bg-gray-100">
@@ -112,6 +142,7 @@
                                     <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tên</th>
                                     <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
                                     <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Giới tính</th>
+                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Ngày sinh</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Thao tác</th>
                                 </tr>
                                 </thead>

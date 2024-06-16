@@ -15,6 +15,7 @@ import project4.mapper.UserMapper;
 import project4.repository.RoleRepo;
 import project4.repository.UserRepo;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,6 +39,7 @@ public class UserService {
 
         User user = userMapper.createUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setCreateTime(new Date());
         Set<Role> roles = new HashSet<>();
         if(request.getRoles() == null || request.getRoles().isEmpty()){
             Role defautRole = roleRepo.findByName("USER");

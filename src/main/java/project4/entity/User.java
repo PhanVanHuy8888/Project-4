@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
+
 
 @Data
 @NoArgsConstructor
@@ -33,6 +33,10 @@ public class User {
     private Date birthday;
 
     private String gender;
+
+    private Date createTime;
+
+    private Date updateTime;
 
     @ManyToMany()
     Set<Role> roles;

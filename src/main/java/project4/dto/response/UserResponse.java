@@ -8,6 +8,7 @@ import java.util.Date;
 @Builder
 @Getter
 public class UserResponse {
+    private String id;
 
     private String userName;
 

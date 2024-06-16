@@ -8,6 +8,7 @@ public class Project4Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Project4Application.class, args);
+		System.out.println("not found");
 	}
 
 }
