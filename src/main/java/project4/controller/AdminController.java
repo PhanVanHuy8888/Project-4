@@ -26,8 +26,18 @@ public class AdminController {
         return "admin/listProduct";
     }
 
+    @GetMapping("/listCategory")
+    public String getAllCategory() {
+        return "admin/listCategory";
+    }
+
     @GetMapping("/addProduct")
     public String createProduct(){
         return "admin/addProduct";
+    }
+
+    @GetMapping("/createCate")
+    public String createCate(){
+        return "admin/createCate";
     }
 }

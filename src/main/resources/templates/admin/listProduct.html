@@ -21,62 +21,64 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            fetchUsers();
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchProduct();
         });
 
-        async function fetchUsers() {
+        async function fetchProduct() {
             const response = await fetch('/chocolate/product/list');
             const product = await response.json();
             const tableBody = document.getElementById('productTableBody');
             tableBody.innerHTML = ''; // Clear existing rows
 
             product.forEach((product, index) => {
-                // const imageUrl = `/chocolate/static/images/${product.image}`
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td class="text-center">${index + 1}</td>
-                    <td class="text-center">${product.name}</td>
-                    <td class="text-center">
-                        <img src="/static/images/${product.image}" alt="Product Image" style="width: 50px; height: 50px;">
-                    </td>
-                    <td class="text-center">${product.quantity}</td>
-                    <td class="text-center">${product.description}</td>
-                    <td class="text-center">
-                        <button class="btn btn-primary" onclick="updateUser('${product.id}')">Sửa</button>
-                        <button class="btn btn-danger" onclick="deleteUser('${product.id}')">Xóa</button>
-                    </td>
-                `;
+            <td class="text-center">${index + 1}</td>
+            <td class="text-center">${product.name}</td>
+            <td class="text-center">
+                <img src="/chocolate/img/${product.image}" width="100" alt="${product.name}">
+            </td>
+            <td class="text-center">${product.quantity}</td>
+            <td class="text-center">${product.description}</td>
+            <td>${product.categoryName}</td>
+            <td class="text-center">
+                <button class="btn btn-primary" onclick="editProduct('${product.id}')">Sửa</button>
+                <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">Xóa</button>
+            </td>
+        `;
                 tableBody.appendChild(row);
             });
         }
 
-        async function deleteUser(id) {
-            console.log('User ID to delete:', id);
-            if (confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) {
+        async function deleteProduct(id) {
+            console.log('Product ID to delete:', id);
+            if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')) {
                 try {
-                    const response = await fetch(`/chocolate/users/${id}`, {
+                    const response = await fetch(`/chocolate/product/${id}`, {
                         method: 'DELETE'
                     });
 
                     if (response.ok) {
-                        alert()
-                        alert('User has been deleted');
-                        fetchUsers(); // Refresh the list
+                        alert('Product has been deleted');
+                        fetchProduct(); // Refresh the list
                     } else {
                         const errorMessage = await response.text();
-                        alert('Error deleting user: ' + errorMessage);
+                        alert('Error deleting product: ' + errorMessage);
                     }
                 } catch (error) {
-                    console.error('Error deleting user:', error);
-                    alert('Error deleting user: ' + error.message);
+                    console.error('Error deleting product:', error);
+                    alert('Error deleting product: ' + error.message);
                 }
             }
         }
 
-        async function updateUser(userId) {
-            window.location.href = `/chocolate/editUser?id=${userId}`;
+        async function editProduct(id) {
+            // Implement edit functionality
         }
+
+        document.addEventListener('DOMContentLoaded', fetchProduct);
+
 
     </script>
 </head>
@@ -87,14 +89,16 @@
     <div th:include="admin/aside :: div"></div>
 </aside>
 <main class="main-content border-radius-lg">
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+         data-scroll="true">
         <div class="container-fluid py-1 px-3">
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
                     <div style="margin-top: 20px;" class="input-group input-group-outline">
                         <label class="form-label">Tìm kiếm...</label>
                         <input style="height: 40px;" type="text" class="form-control">
-                        <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+                        <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass"
+                                                                         aria-hidden="true"></i></button>
                     </div>
                 </div>
                 <ul class="navbar-nav justify-content-end">
@@ -113,7 +117,8 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                        <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton"
+                           data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-bell cursor-pointer"></i>
                         </a>
                     </li>
@@ -144,11 +149,22 @@
                                 <thead>
                                 <tr>
                                     <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7">#</th>
-                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tên</th>
-                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Ảnh</th>
-                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Số lượng</th>
-                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Mô tả</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Thao tác</th>
+                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tên
+                                    </th>
+                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Ảnh
+                                    </th>
+                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Số
+                                        lượng
+                                    </th>
+                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Mô
+                                        tả
+                                    </th>
+                                    <th></th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Thao tác
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody id="productTableBody">

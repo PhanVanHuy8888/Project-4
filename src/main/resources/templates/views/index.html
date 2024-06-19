@@ -44,7 +44,7 @@
 <div class="main_body_content">
 
     <div class="hero_area">
-        <div th:include="header :: header"></div>
+        <div th:include="static/header :: header"></div>
         <section class="slider_section ">
             <div id="customCarousel1" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -186,35 +186,8 @@
     <section style="background-color: #eee;">
         <div class="text-center container py-5">
             <h4 class="mt-4 mb-5"><strong>Các sản phẩm</strong></h4>
-            <div class="row">
-                <div class="col-lg-4 col-md-12 mb-4" th:each="p : ${lstProduct}">
-                    <div class="card">
-                        <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
-                             data-mdb-ripple-color="light">
-                            <img class="w-100" th:src="@{'/img/product_img/'+ ${p.image}}" alt="">
+            <div class="row" id="productContainer">
 
-                            <a href="#!">
-                                <div class="mask">
-                                    <div class="d-flex justify-content-start align-items-end h-100">
-                                        <h5><span class="badge bg-primary ms-2">New</span></h5>
-                                    </div>
-                                </div>
-                                <div class="hover-overlay">
-                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <a th:href="@{'/product/' + ${p.id}}" class="text-reset">
-                                <h5 class="card-title mb-3" th:text="${p.title}"></h5>
-                            </a>
-                            <a href="" class="text-reset">
-                                <p th:text="${p.category}"></p>
-                            </a>
-                            <h6 class="mb-3" th:text="${p.price}"></h6>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -355,7 +328,7 @@
     <!-- end client section -->
 
     <!-- info section -->
-    <div th:include="footer :: footer"></div>
+    <div th:include="static/footer :: footer"></div>
 
     <!-- end info_section -->
 
@@ -375,5 +348,54 @@
         type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"
 ></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetchProducts();
+    });
+
+    async function fetchProducts() {
+        try {
+            const response = await fetch('/chocolate/product/list');
+            const products = await response.json();
+            const productContainer = document.getElementById('productContainer');
+
+            products.forEach((product) => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('col-lg-4', 'col-md-12', 'mb-4');
+
+                productCard.innerHTML = `
+                        <div class="card">
+                            <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
+                                <img class="w-100" src="/chocolate/img/${product.image}" alt="${product.name}">
+                                <a href="#!">
+                                    <div class="mask">
+                                        <div class="d-flex justify-content-start align-items-end h-100">
+                                            <h5><span class="badge bg-primary ms-2">New</span></h5>
+                                        </div>
+                                    </div>
+                                    <div class="hover-overlay">
+                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <a href="/product/${product.id}" class="text-reset">
+                                    <h5 class="card-title mb-3">${product.name}</h5>
+                                </a>
+                                <a href="#" class="text-reset">
+                                    <p>${product.categoryName}</p>
+                                </a>
+                                <h6 class="mb-3">${product.price}</h6>
+                            </div>
+                        </div>
+                    `;
+
+                productContainer.appendChild(productCard);
+            });
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
+    }
+</script>
 </body>
 </html>

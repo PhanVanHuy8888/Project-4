@@ -27,7 +27,7 @@ public class ProductService {
     @Autowired
     private CategoryRepo categoryRepo;
 
-    private final String uploadDir = "src/main/resources/static/images";
+    private final String uploadDir = "src/main/resources/static/img";
 
     @Autowired
     private ProductMapper productMapper;
@@ -41,25 +41,25 @@ public class ProductService {
 
     public ProductResponse createProduct(ProductRequest request, MultipartFile image) {
         Product product = productMapper.createProduct(request);
-        System.out.println(request.getCategoryName());
         product.setCreateDate(new Date());
 
-        Integer categoryId = categoryRepo.findIdByName(request.getCategoryName());
-        if (categoryId == null) {
-            throw new IllegalArgumentException("Không tìm thấy danh mục với tên: " + request.getCategoryName());
-        }
+        int categoryId = categoryRepo.findIdByName(request.getCategoryName());
+//        if (categoryId == null) {
+//            throw new IllegalArgumentException("Không tìm thấy danh mục với tên: " + request.getCategoryName());
+//        }
         product.setCategoryId(categoryId);
 
-        if(image != null && !image.isEmpty()){
-            try{
+        if (image != null && !image.isEmpty()) {
+            try {
                 String imageUrl = saveImage(image);
                 product.setImage(imageUrl);
-            }catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return productMapper.toProduct(productRepo.save(product));
     }
+
 
     public ProductResponse updateProduct(int id, ProductRequest request){
         Product product = productRepo.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
@@ -81,6 +81,7 @@ public class ProductService {
         String uniqueFileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
         Path filePath = Paths.get(uploadDir, uniqueFileName);
         Files.copy(image.getInputStream(), filePath);
+        System.out.println(filePath.toString());
         return uniqueFileName;
     }
 

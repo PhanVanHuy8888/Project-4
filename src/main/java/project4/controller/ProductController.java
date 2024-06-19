@@ -24,6 +24,9 @@ public class ProductController {
     public ProductResponse createProduct(@RequestPart("product") ProductRequest request, @RequestPart("image") MultipartFile image) {
         return productService.createProduct(request, image);
     }
+
+
+
     @PutMapping("/{id}")
     public ProductResponse updateProduct(@PathVariable int id, @RequestBody ProductRequest request){
 
