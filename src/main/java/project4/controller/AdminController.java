@@ -21,4 +21,13 @@ public class AdminController {
         return "admin/listUser";
     }
 
+    @GetMapping("/listProduct")
+    public String getAllProduct() {
+        return "admin/listProduct";
+    }
+
+    @GetMapping("/addProduct")
+    public String createProduct(){
+        return "admin/addProduct";
+    }
 }
