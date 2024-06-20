@@ -44,9 +44,6 @@ public class ProductService {
         product.setCreateDate(new Date());
 
         int categoryId = categoryRepo.findIdByName(request.getCategoryName());
-//        if (categoryId == null) {
-//            throw new IllegalArgumentException("Không tìm thấy danh mục với tên: " + request.getCategoryName());
-//        }
         product.setCategoryId(categoryId);
 
         if (image != null && !image.isEmpty()) {
@@ -61,12 +58,31 @@ public class ProductService {
     }
 
 
-    public ProductResponse updateProduct(int id, ProductRequest request){
+    public ProductResponse updateProduct(int id, ProductRequest request, MultipartFile image) {
         Product product = productRepo.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
-        product.setUpdateDate(new Date());
+
         productMapper.updateProduct(product, request);
+        product.setUpdateDate(new Date());
+
+        int categoryId = categoryRepo.findIdByName(request.getCategoryName());
+        product.setCategoryId(categoryId);
+
+        if (image != null && !image.isEmpty()) {
+            try {
+                String imageUrl = saveImage(image);
+                product.setImage(imageUrl);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return productMapper.toProduct(productRepo.save(product));
     }
+
+    public ProductResponse getById(int id) {
+        Product product = productRepo.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        return productMapper.toProduct(product);
+    }
+
 
     public List<ProductResponse> getAll() {
         return productRepo.findAll().stream().map(productMapper::toProduct).toList();

@@ -37,11 +37,10 @@
             <td class="text-center">${index + 1}</td>
             <td class="text-center">${product.name}</td>
             <td class="text-center">
-                <img src="/chocolate/img/${product.image}" width="100" alt="${product.name}">
+                <img src="http://localhost:8080/chocolate/img/${product.image}" width="100" alt="${product.name}">
             </td>
             <td class="text-center">${product.quantity}</td>
             <td class="text-center">${product.description}</td>
-            <td>${product.categoryName}</td>
             <td class="text-center">
                 <button class="btn btn-primary" onclick="editProduct('${product.id}')">Sửa</button>
                 <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">Xóa</button>
@@ -74,8 +73,9 @@
         }
 
         async function editProduct(id) {
-            // Implement edit functionality
+            window.location.href = `/chocolate/updateProduct?id=${id}`;
         }
+
 
         document.addEventListener('DOMContentLoaded', fetchProduct);
 
@@ -161,7 +161,6 @@
                                     <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Mô
                                         tả
                                     </th>
-                                    <th></th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Thao tác
                                     </th>

@@ -364,7 +364,7 @@
                 productCard.classList.add('col-lg-4', 'col-md-12', 'mb-4');
 
                 productCard.innerHTML = `
-                        <div class="card">
+                        <div class="card" onclick="viewProduct('${product.id}')">
                             <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
                                 <img class="w-100" src="/chocolate/img/${product.image}" alt="${product.name}">
                                 <a href="#!">
@@ -396,6 +396,11 @@
             console.error('Error fetching products:', error);
         }
     }
+
+    async function viewProduct(id) {
+        window.location.href = `/chocolate/viewProduct?id=${id}`;
+    }
+
 </script>
 </body>
 </html>

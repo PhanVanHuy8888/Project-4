@@ -20,6 +20,11 @@ public class ProductController {
         return productService.getAll();
     }
 
+    @GetMapping("/{id}")
+    public ProductResponse getById(@PathVariable int id) {
+        return productService.getById(id);
+    }
+
     @PostMapping
     public ProductResponse createProduct(@RequestPart("product") ProductRequest request, @RequestPart("image") MultipartFile image) {
         return productService.createProduct(request, image);
@@ -28,9 +33,8 @@ public class ProductController {
 
 
     @PutMapping("/{id}")
-    public ProductResponse updateProduct(@PathVariable int id, @RequestBody ProductRequest request){
-
-        return productService.updateProduct(id, request);
+    public ProductResponse updateProduct(@PathVariable int id, @RequestPart("product") ProductRequest request, @RequestPart("image") MultipartFile image) {
+        return productService.updateProduct(id, request, image);
     }
 
     @DeleteMapping("/{id}")

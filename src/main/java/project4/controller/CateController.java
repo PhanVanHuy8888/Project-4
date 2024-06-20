@@ -15,6 +15,11 @@ public class CateController {
     @Autowired
     private CategoryService categoryService;
 
+    @GetMapping("/{id}")
+    public CategoryResponse getById(@PathVariable int id) {
+        return categoryService.getCateById(id);
+    }
+
     @PostMapping
     public CategoryResponse createUser(@RequestBody CategoryRequest request){
 

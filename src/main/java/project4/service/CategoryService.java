@@ -42,6 +42,11 @@ public class CategoryService {
         return cateRepo.findAll().stream().map(cateMapper::toCate).toList();
     }
 
+    public CategoryResponse getCateById(int id){
+        Category cate = cateRepo.findById(id).orElseThrow(() -> new RuntimeException("Not found cate"));
+        return cateMapper.toCate(cate);
+    }
+
     public void deleteCate(int id){
         cateRepo.deleteById(id);
     }

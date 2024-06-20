@@ -6,11 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping("/home")
-    public String home() {
-        return "admin/index";
-    }
-
     @GetMapping("/index")
     public String index() {
         return "views/index";
@@ -18,7 +13,7 @@ public class HomeController {
 
     @GetMapping("/signin")
     public String login() {
-        return "login";
+        return "views/login";
     }
 
 
@@ -26,6 +21,13 @@ public class HomeController {
     public String register() {
         return "register";
     }
+
+
+    @GetMapping("/viewProduct")
+    public String viewProduct() {
+        return "views/viewProduct";
+    }
+
 
 
     @GetMapping("/access-denied")

@@ -12,4 +12,7 @@ public interface CategoryRepo extends JpaRepository<Category, Integer> {
 
     @Query("SELECT c.id from Category c WHERE c.name = :name")
     int findIdByName(@Param("name") String name);
+
+    @Query("SELECT c.name FROM Category c WHERE c.id = :id")
+    String findNameById(@Param("id") int id);
 }

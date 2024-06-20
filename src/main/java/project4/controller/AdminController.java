@@ -6,6 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AdminController {
 
+    @GetMapping("/home")
+    public String home() {
+        return "admin/index";
+    }
     @GetMapping("/createUser")
     public String createUser() {
         return "admin/createUser";
@@ -15,6 +19,18 @@ public class AdminController {
     public String editUser() {
         return "admin/editUser";
     }
+
+
+    @GetMapping("/editCate")
+    public String editCate() {
+        return "admin/editCate";
+    }
+
+    @GetMapping("/updateProduct")
+    public String editProduct() {
+        return "admin/editProduct";
+    }
+
 
     @GetMapping("/listUser")
     public String getAllUser() {
