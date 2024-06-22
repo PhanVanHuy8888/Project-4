@@ -29,10 +29,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/listProduct").hasRole("ADMIN")
+                        .requestMatchers("/index", "/css/**", "/js/**", "/images/**").permitAll()
 
-
-                        .requestMatchers("/", "/home", "/register", "/signin").permitAll()
+                        .requestMatchers( "/home", "/register", "/signin").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form->form.loginPage("/signin")

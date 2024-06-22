@@ -1,6 +1,7 @@
 package project4.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import project4.dto.request.ProductRequest;
@@ -83,7 +84,7 @@ public class ProductService {
         return productMapper.toProduct(product);
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     public List<ProductResponse> getAll() {
         return productRepo.findAll().stream().map(productMapper::toProduct).toList();
 

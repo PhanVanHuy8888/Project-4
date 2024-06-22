@@ -43,8 +43,8 @@
                 <div class="quote_btn-container">
                     <form class="form-inline">
                         <input type="text" placeholder="Tìm kiếm" />
-                        <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
-                            <i class="fa fa-search" aria-hidden="true"></i>
+                        <button class="btn  my-2 my-sm-0 nav_search-btn border" type="submit">
+                            <i class="fa fa-search " aria-hidden="true"></i>
                         </button>
                     </form>
                     <div class="dropdown">
@@ -53,10 +53,12 @@
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="/login">Đăng nhập</a>
-                            <a class="dropdown-item" href="/register">Đăng ký</a>
+                            <a class="dropdown-item" th:text="${username}"></a>
+                            <a th:if="${isAuthenticated}" class="dropdown-item" href="#">Đơn hàng</a>
+                            <a th:if="${!isAuthenticated}"  class="dropdown-item" href="/login">Đăng nhập</a>
+                            <a th:if="${!isAuthenticated}"   class="dropdown-item" href="/register">Đăng ký</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                            <a th:if="${isAuthenticated}"  class="dropdown-item" th:href="@{/logout}">Logout</a>
                         </div>
                     </div>
                 </div>
