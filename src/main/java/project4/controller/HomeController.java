@@ -12,8 +12,9 @@ import java.security.Principal;
 @Controller
 public class HomeController {
 
+
     @GetMapping("/index")
-    public String index(Model model, Principal principal) {
+    public String index(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated() && !(authentication.getPrincipal() instanceof String)) {
@@ -39,7 +40,16 @@ public class HomeController {
 
 
     @GetMapping("/viewProduct")
-    public String viewProduct() {
+    public String viewProduct(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated() && !(authentication.getPrincipal() instanceof String)) {
+            String username = authentication.getName();
+            model.addAttribute("username", username);
+            model.addAttribute("isAuthenticated", true);
+        } else {
+            model.addAttribute("isAuthenticated", false);
+        }
         return "views/viewProduct";
     }
 
@@ -50,9 +60,19 @@ public class HomeController {
         return "error-403";
     }
 
+    @GetMapping("/cart")
+    public String cart() {
+        return "views/listCart";
+    }
 
-    @GetMapping("/order")
+    @GetMapping("/checkout")
     public String order() {
-        return "admin/order";
+        return "views/checkout";
+    }
+
+
+    @GetMapping("/success")
+    public String success() {
+        return "views/success";
     }
 }

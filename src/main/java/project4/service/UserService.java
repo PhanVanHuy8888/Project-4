@@ -74,6 +74,10 @@ public class UserService {
         return userMapper.toUserResponse(userRepo.findById(id).orElseThrow(() ->  new RuntimeException("User not found by id=" + id)) );
     }
 
+    public UserResponse getUserByName(String username) {
+        return userMapper.toUserResponse(userRepo.findByUserName(username));
+    }
+
     public void deleteUser(String id) {
         userRepo.deleteById(id);
     }

@@ -4,9 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project4.dto.request.CartRequest;
 import project4.dto.response.CartReponse;
+import project4.dto.response.UserResponse;
 import project4.entity.Cart;
+import project4.entity.Order;
+import project4.entity.User;
 import project4.mapper.CartMapper;
 import project4.repository.CartRepo;
+
+import java.util.List;
 
 @Service
 public class CartService {
@@ -35,5 +40,19 @@ public class CartService {
                 .status("Success")
                 .message("Product add to cart Success!")
                 .build();
+    }
+
+    public List<Cart> getAllByUserName(String username){
+        return cartRepo.findByUsername(username);
+    }
+
+
+
+    public void checkout(String username) {
+//        List<Cart> userCart = cartRepo.findByUsername(username);
+//        float fotalAmount = userCart.stream().map(cart -> cart.getSum()).reduce(0f, Float::sum);
+//
+//        Order order = new Order();
+//        order.setUser(new User(username));
     }
 }

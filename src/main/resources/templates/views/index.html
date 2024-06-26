@@ -5,11 +5,11 @@
     <title>Index</title>
     <link rel="stylesheet" type="text/css" href="/chocolate/css/bootstrap.css"/>
     <!--slick slider stylesheet -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css"/>
 
     <!-- fonts style -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet"/>
     <!-- slick slider -->
     <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -347,32 +347,33 @@
                 const productCard = document.createElement('div');
                 productCard.classList.add('col-lg-4', 'col-md-12', 'mb-4');
 
+                // Định dạng giá bằng JavaScript
+                const formattedPrice = new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(product.price);
+
                 productCard.innerHTML = `
-                        <div class="card" onclick="viewProduct('${product.id}')">
-                            <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
-                                <img class="w-100" src="/chocolate/img/${product.image}" alt="${product.name}">
-                                <a href="#!">
-                                    <div class="mask">
-                                        <div class="d-flex justify-content-start align-items-end h-100">
-                                            <h5><span class="badge bg-primary ms-2">New</span></h5>
-                                        </div>
-                                    </div>
-                                    <div class="hover-overlay">
-                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="card-body">
-                                <a href="/product/${product.id}" class="text-reset">
-                                    <h5 class="card-title mb-3">${product.name}</h5>
-                                </a>
-                                <a href="#" class="text-reset">
-                                    <p>${product.categoryName}</p>
-                                </a>
-                                <h6 class="mb-3">${product.price}</h6>
-                            </div>
+                    <div class="card" onclick="viewProduct('${product.id}')">
+                        <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
+                            <img class="w-100" src="/chocolate/img/${product.image}" alt="${product.name}">
+
                         </div>
-                    `;
+                        <div class="card-body">
+                            <a href="#" class="text-reset">
+                                <h5 class="card-title mb-3">${product.name}</h5>
+                            </a>
+                            <a href="#" class="text-reset">
+                                <p>${product.categoryName}</p>
+                            </a>
+                            <h6 class="mb-3">
+                                <span class="text-black rounded-pill py-2 px-3 font-weight-bold">
+                                    ${formattedPrice}
+                                </span>
+                            </h6>
+                        </div>
+                    </div>
+                `;
 
                 productContainer.appendChild(productCard);
             });
@@ -380,6 +381,7 @@
             console.error('Error fetching products:', error);
         }
     }
+
 
     async function viewProduct(id) {
         window.location.href = `/chocolate/viewProduct?id=${id}`;

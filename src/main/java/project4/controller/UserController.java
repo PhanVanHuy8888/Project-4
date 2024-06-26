@@ -8,6 +8,7 @@ import project4.dto.request.UserRequest;
 import project4.dto.response.UserResponse;
 import project4.service.UserService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -53,35 +54,11 @@ public class UserController {
     }
 
 
-//
-//    @GetMapping("list")
-//    public List<UserResponse> getAll() {
-//        return userService.getAllUser();
-//    }
-//
-//    @GetMapping("/listUser")
-//    public String listUser(Model m) {
-//        m.addAttribute("lstUser", userService.getAllUser());
-//        return "admin/listUser";
-//    }
-//
-//    @GetMapping("/createUser")
-//    public String showCreateUserForm(Model model) {
-//        return "admin/createUser";
-//    }
-//
-//
-//    @PostMapping
-//    public String createUser(@ModelAttribute UserRequest userRequest, Model model) {
-//        try {
-//            UserResponse userResponse = userService.createUser(userRequest);
-//            return "redirect:/users/listUser";
-//        } catch (Exception e) {
-//            model.addAttribute("message", "Error creating user: " + e.getMessage());
-//        }
-//        model.addAttribute("user", new UserRequest()); // Reset the form
-//        return "admin/createUser";
-//    }
-
+    @GetMapping("/getUser")
+    public UserResponse getUByName(Principal principal) {
+        String username = principal.getName();
+        UserResponse user = userService.getUserByName(username);
+        return user;
+    }
 
 }

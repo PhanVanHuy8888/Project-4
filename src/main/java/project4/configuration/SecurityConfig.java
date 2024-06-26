@@ -30,9 +30,9 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable())
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/listProduct").hasRole("ADMIN")
-                        .requestMatchers("/index", "/css/**", "/js/**", "/images/**").permitAll()
-
-                        .requestMatchers( "/home", "/register", "/signin").permitAll()
+                        .requestMatchers( "/css/**","/img/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers( "/product/**").permitAll()
+                        .requestMatchers( "/index","/home", "/register", "/signin").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form->form.loginPage("/signin")
