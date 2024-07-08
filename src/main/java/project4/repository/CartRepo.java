@@ -8,9 +8,9 @@ import java.util.List;
 
 @Repository
 public interface CartRepo extends JpaRepository<Cart, Long> {
-    Cart findByUsernameAndProductName(String username, String productName);
+    Cart findCartByProductName(String productName);
 
-    List<Cart> findByUsername(String username);
+    List<Cart> findByUserId(String userId);
 
-    void deleteCartByUsername(String username);
+    void deleteCartByUserId(String userId);
 }

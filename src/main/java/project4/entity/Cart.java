@@ -22,7 +22,5 @@ public class Cart {
     private int quantity;
     private float price;
     private float sum;
-    private String username;
-
-
+    private String userId;
 }

@@ -333,6 +333,13 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"
 ></script>
 <script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const searchQuery = document.getElementById('searchInput').value;
+        const searchURL = `/chocolate/search?query=${searchQuery}`;
+        console.log(searchURL); // Thêm dòng này để kiểm tra URL
+        window.location.href = searchURL;
+    });
     document.addEventListener('DOMContentLoaded', function () {
         fetchProducts();
     });

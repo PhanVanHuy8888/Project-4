@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+    <link rel="stylesheet" type="text/css" href="/chocolate/css/bootstrap.css"/>
+    <!--slick slider stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css"/>
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet"/>
+    <!-- slick slider -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+            rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/chocolate/css/slick-theme.css"/>
+    <!-- font awesome style -->
+    <link href="/chocolate/css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- Custom styles for this template -->
+    <link href="/chocolate/css/style.css" rel="stylesheet"/>
+    <!-- responsive style -->
+    <link href="/chocolate/css/responsive.css" rel="stylesheet"/>
+</head>
+<body>
+<header class="header_section">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container">
+            <a class="navbar-brand px-3" href="index">
+                ChocoLux
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class=""> </span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products">Chocolates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact">Contact Us</a>
+                    </li>
+                </ul>
+                <div class="quote_btn-container">
+                    <form class="form-inline" id="searchForm">
+                        <input type="text" id="searchInput" placeholder="Tìm kiếm"/>
+                        <button class="btn my-2 my-sm-0 nav_search-btn border" type="submit">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="userDropdown"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="text-center container py-5">
+    <div class="row" id="results">
+    </div>
+</div>
+
+<div th:include="static/footer :: footer"></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = urlParams.get('query');
+        if (query) {
+            fetch(`/chocolate/product/search/${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsContainer = document.getElementById('results');
+                    data.forEach(product => {
+                        const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price);
+                        const productElement = document.createElement('div');
+                        productElement.classList.add('col-md-4'); // Assuming you want 3 products per row
+                        productElement.innerHTML = `
+                            <div class="card" onclick="viewProduct('${product.id}')">
+                                <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
+                                    <img class="w-100" src="/chocolate/img/${product.image}" alt="${product.name}">
+                                </div>
+                                <div class="card-body">
+                                    <a href="#" class="text-reset">
+                                        <h5 class="card-title mb-3">${product.name}</h5>
+                                    </a>
+                                    <a href="#" class="text-reset">
+                                        <p>${product.categoryName}</p>
+                                    </a>
+                                    <h6 class="mb-3">
+                                        <span class="text-black rounded-pill py-2 px-3 font-weight-bold">
+                                            ${formattedPrice}
+                                        </span>
+                                    </h6>
+                                </div>
+                            </div>
+                        `;
+                        resultsContainer.appendChild(productElement);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    });
+
+    // Function to handle product view click
+    function viewProduct(productId) {
+        window.location.href = `/product/${productId}`;
+    }
+
+    // Search form submission handling
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const query = document.getElementById('searchInput').value;
+        window.location.href = `?query=${query}`;
+    });
+</script>
+</body>
+</html>

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,23 +19,22 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private String code;
 
     private String phone;
-    private String customer;
+
+    private String customerName;
 
     private String address;
 
-    private String productName;
-
     private String status;
 
-    private int quantity;
-
-    private float total;
+    private Float total;
 
     private Date createDate;
 
     private String payment;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderDetail> orderDetails;
 }

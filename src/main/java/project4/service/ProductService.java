@@ -1,7 +1,7 @@
 package project4.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import project4.dto.request.ProductRequest;
@@ -22,6 +22,7 @@ import java.util.UUID;
 
 @Service
 public class ProductService {
+
     @Autowired
     private ProductRepo productRepo;
 
@@ -29,6 +30,7 @@ public class ProductService {
     private CategoryRepo categoryRepo;
 
     private final String uploadDir = "src/main/resources/static/img";
+
 
     @Autowired
     private ProductMapper productMapper;
@@ -84,7 +86,6 @@ public class ProductService {
         return productMapper.toProduct(product);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     public List<ProductResponse> getAll() {
         return productRepo.findAll().stream().map(productMapper::toProduct).toList();
 
@@ -102,4 +103,7 @@ public class ProductService {
         return uniqueFileName;
     }
 
+    public List<ProductResponse> searchProduct(String name) {
+        return productRepo.findByName(name).stream().map(productMapper::toProduct).toList();
+    }
 }

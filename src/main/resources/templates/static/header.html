@@ -5,10 +5,9 @@
     <title>Title</title>
     <style>
         .dropdown-menu .dropdown-item:hover {
-            background-color: transparent !important; /* Đặt nền của dropdown item khi hover thành trong suốt */
-            color: inherit !important; /* Giữ màu chữ khi hover */
+            background-color: transparent !important;
+            color: inherit !important;
         }
-
     </style>
 </head>
 <body>
@@ -29,22 +28,20 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html"> About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/products">Chocolates</a>
+                        <a class="nav-link" href="products">Chocolates</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact Us</a>
+                        <a class="nav-link" href="contact">Contact Us</a>
                     </li>
                 </ul>
                 <div class="quote_btn-container">
-                    <form class="form-inline">
-                        <input type="text" placeholder="Tìm kiếm" />
-                        <button class="btn  my-2 my-sm-0 nav_search-btn border" type="submit">
-                            <i class="fa fa-search " aria-hidden="true"></i>
+                    <form class="form-inline" id="searchForm">
+                        <input type="text" id="searchInput" placeholder="Tìm kiếm" />
+                        <button class="btn my-2 my-sm-0 nav_search-btn border" type="submit">
+                            <i class="fa fa-search" aria-hidden="true"></i>
                         </button>
                     </form>
                     <div class="dropdown">
@@ -55,10 +52,10 @@
                         <div class="dropdown-menu" aria-labelledby="userDropdown">
                             <a class="dropdown-item" th:text="${username}"></a>
                             <a th:if="${isAuthenticated}" class="dropdown-item" href="cart">Đơn hàng</a>
-                            <a th:if="${!isAuthenticated}"  class="dropdown-item" href="login">Đăng nhập</a>
-                            <a th:if="${!isAuthenticated}"   class="dropdown-item" href="register">Đăng ký</a>
+                            <a th:if="${!isAuthenticated}" class="dropdown-item" href="signin">Đăng nhập</a>
+                            <a th:if="${!isAuthenticated}" class="dropdown-item" href="register">Đăng ký</a>
                             <div class="dropdown-divider"></div>
-                            <a th:if="${isAuthenticated}"  class="dropdown-item" th:href="@{/logout}">Logout</a>
+                            <a th:if="${isAuthenticated}" class="dropdown-item" th:href="@{/logout}">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -66,5 +63,7 @@
         </nav>
     </div>
 </header>
+
+
 </body>
 </html>

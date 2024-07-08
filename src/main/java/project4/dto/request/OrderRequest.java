@@ -2,32 +2,24 @@ package project4.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
-@Data
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
-
-public class OrderRequest {
+public class OrderRequest implements Serializable {
 
     private String code;
-
     private String phone;
-    private String customer;
-
+    private String customerName;
     private String address;
-
-    private String productName;
-
     private String status;
-
-    private int quantity;
-
     private float total;
-
-    private Date createDate;
+    private List<OrderDetailRequest> orderDetails;
 
 }

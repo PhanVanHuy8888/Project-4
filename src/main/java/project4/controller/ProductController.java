@@ -26,14 +26,16 @@ public class ProductController {
     }
 
     @PostMapping
-    public ProductResponse createProduct(@RequestPart("product") ProductRequest request, @RequestPart("image") MultipartFile image) {
+    public ProductResponse createProduct(@RequestPart("product") ProductRequest request,
+                                         @RequestPart("image") MultipartFile image) {
         return productService.createProduct(request, image);
     }
 
 
 
     @PutMapping("/{id}")
-    public ProductResponse updateProduct(@PathVariable int id, @RequestPart("product") ProductRequest request, @RequestPart("image") MultipartFile image) {
+    public ProductResponse updateProduct(@PathVariable int id, @RequestPart("product") ProductRequest request,
+                                         @RequestPart("image") MultipartFile image) {
         return productService.updateProduct(id, request, image);
     }
 
@@ -41,5 +43,10 @@ public class ProductController {
     public String deleteProduct(@PathVariable int id) {
         productService.deleteProduct(id);
         return "Product has been deleted";
+    }
+
+    @GetMapping("/search/{name}")
+    public List<ProductResponse> searchProduct(@PathVariable String name){
+        return productService.searchProduct(name);
     }
 }

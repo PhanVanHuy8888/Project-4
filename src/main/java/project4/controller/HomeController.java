@@ -5,9 +5,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import project4.configuration.CustomUser;
-
-import java.security.Principal;
 
 @Controller
 public class HomeController {
@@ -74,5 +71,37 @@ public class HomeController {
     @GetMapping("/success")
     public String success() {
         return "views/success";
+    }
+
+    @GetMapping("/products")
+    public String chocolate(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated() && !(authentication.getPrincipal() instanceof String)) {
+            String username = authentication.getName();
+            model.addAttribute("username", username);
+            model.addAttribute("isAuthenticated", true);
+        } else {
+            model.addAttribute("isAuthenticated", false);
+        }
+        return "views/chocolate";
+    }
+    @GetMapping("/contact")
+    public String contact(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated() && !(authentication.getPrincipal() instanceof String)) {
+            String username = authentication.getName();
+            model.addAttribute("username", username);
+            model.addAttribute("isAuthenticated", true);
+        } else {
+            model.addAttribute("isAuthenticated", false);
+        }
+        return "views/contact";
+    }
+
+    @GetMapping("/search")
+    public String search() {
+        return "/views/searchProduct";
     }
 }

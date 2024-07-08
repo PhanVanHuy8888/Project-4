@@ -4,6 +4,12 @@
 Icon colors
 
 -------------------------------- */
+.truncated {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px; /* bạn có thể thay đổi giá trị này theo ý muốn */
+}
 
 .icon {
   display: inline-block;

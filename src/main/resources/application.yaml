@@ -29,4 +29,18 @@ spring:
 
       add-mappings: true
 
+#
+#openapi:
+#  service:
+#    api-docs: api-service
+#    server: http://localhost:8080
+#    title: API Service
+#    version: 1.0.0
+#    description: Mota API service
+#    serverName: Server Test
 
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

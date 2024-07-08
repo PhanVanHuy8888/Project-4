@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About</title>
+    <link rel="stylesheet" type="text/css" href="/chocolate/css/bootstrap.css"/>
+    <!--slick slider stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css"/>
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet"/>
+    <!-- slick slider -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+            rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/chocolate/css/slick-theme.css"/>
+    <!-- font awesome style -->
+    <link href="/chocolate/css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- Custom styles for this template -->
+    <link href="/chocolate/css/style.css" rel="stylesheet"/>
+    <!-- responsive style -->
+    <link href="/chocolate/css/responsive.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div th:include="static/header :: header"></div>
+<section class="contact_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 col-lg-4 offset-md-1 ">
+                <div class="form_container">
+                    <div class="heading_container">
+                        <h2>
+                            Contact Us
+                        </h2>
+                    </div>
+                    <form action="">
+                        <div>
+                            <input type="text" placeholder="Full Name "/>
+                        </div>
+                        <div>
+                            <input type="text" placeholder="Phone number"/>
+                        </div>
+                        <div>
+                            <input type="email" placeholder="Email"/>
+                        </div>
+                        <div>
+                            <input type="text" class="message-box" placeholder="Message"/>
+                        </div>
+                        <div class="d-flex ">
+                            <button>
+                                SEND NOW
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6  px-0">
+                <div class="map_container">
+                    <div class="map">
+                        <div id="googleMap"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div th:include="static/footer :: footer"></div>
+
+
+<script src="/chocolate/js/jquery-3.4.1.min.js"></script>
+<!-- bootstrap js -->
+<script src="/chocolate/js/bootstrap.js"></script>
+<!-- slick slider -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
+<!-- custom js -->
+<script src="/chocolate/js/custom.js"></script>
+<!-- Google Map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
+<!-- End Google Map -->
+<script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"
+></script>
+</body>
+</html>

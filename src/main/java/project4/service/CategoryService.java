@@ -1,5 +1,6 @@
 package project4.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project4.dto.request.CategoryRequest;
@@ -13,12 +14,12 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryService {
-    @Autowired
-    private CategoryRepo cateRepo;
 
-    @Autowired
-    private CateMapper cateMapper;
+    private final CategoryRepo cateRepo;
+
+    private final CateMapper cateMapper;
 
     public CategoryResponse createCate(CategoryRequest request) {
 //        if(cateRepo.findByName(request.getName())) throw new RuntimeException("Catename already exist");

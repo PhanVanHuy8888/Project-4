@@ -3,11 +3,13 @@ package project4.dto.response;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Builder
 @Getter
-public class UserResponse {
+@Setter
+public class UserResponse implements Serializable {
     private String id;
 
     private String userName;

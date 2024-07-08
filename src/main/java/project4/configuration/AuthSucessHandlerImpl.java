@@ -18,13 +18,11 @@ public class AuthSucessHandlerImpl implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-
         Set<String> roles = AuthorityUtils.authorityListToSet(authorities);
 
         if(roles.contains("ROLE_USER")){
             response.sendRedirect("/chocolate/index");
         }else {
-            response.sendRedirect("/chocolate/home");
-        }
+            response.sendRedirect("/chocolate/home");}
     }
 }

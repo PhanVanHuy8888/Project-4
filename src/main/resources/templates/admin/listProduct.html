@@ -26,28 +26,36 @@
         });
 
         async function fetchProduct() {
-            const response = await fetch('/chocolate/product/list');
-            const product = await response.json();
-            const tableBody = document.getElementById('productTableBody');
-            tableBody.innerHTML = ''; // Clear existing rows
+            try {
+                const response = await fetch('/chocolate/product/list');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                const product = await response.json();
+                console.log(product); // Kiểm tra dữ liệu trả về từ server
+                const tableBody = document.getElementById('productTableBody');
+                tableBody.innerHTML = ''; // Clear existing rows
 
-            product.forEach((product, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-            <td class="text-center">${index + 1}</td>
-            <td class="text-center">${product.name}</td>
-            <td class="text-center">
-                <img src="http://localhost:8080/chocolate/img/${product.image}" width="100" alt="${product.name}">
-            </td>
-            <td class="text-center">${product.quantity}</td>
-            <td class="text-center">${product.description}</td>
-            <td class="text-center">
-                <button class="btn btn-primary" onclick="editProduct('${product.id}')">Sửa</button>
-                <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">Xóa</button>
-            </td>
-        `;
-                tableBody.appendChild(row);
-            });
+                product.forEach((product, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                    <td class="text-center">${index + 1}</td>
+                    <td class="text-center">${product.name}</td>
+                    <td class="text-center">
+                        <img src="/chocolate/img/${product.image}" width="100" alt="${product.name}" onerror="this.onerror=null;this.src='default.jpg';">
+                    </td>
+                    <td class="text-center">${product.quantity}</td>
+                    <td class="text-center truncated">${product.description}</td>
+                    <td class="text-center">
+                        <button class="btn btn-primary" onclick="editProduct('${product.id}')">Sửa</button>
+                        <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">Xóa</button>
+                    </td>
+                `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
         }
 
         async function deleteProduct(id) {
@@ -140,7 +148,7 @@
                             <a href="addProduct" class="btn btn-primary">Thêm mới</a>
                         </div>
                         <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                            <h6 class="text-white text-capitalize ps-3">Danh sách người dùng</h6>
+                            <h6 class="text-white text-capitalize ps-3">Danh sách sản phẩm</h6>
                         </div>
                     </div>
                     <div class="card-body px-0 pb-2">

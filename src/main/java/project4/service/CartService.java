@@ -19,14 +19,14 @@ public class CartService {
     @Autowired
     private CartRepo cartRepo;
 
-    public CartReponse addCart(CartRequest request, String username) {
-        Cart cart = cartRepo.findByUsernameAndProductName(username, request.getProductName());
+    public CartReponse addCart(CartRequest request, String userId) {
+        Cart cart = cartRepo.findCartByProductName(request.getProductName());
         if (cart != null) {
             cart.setQuantity(cart.getQuantity() + request.getQuantity());
             cart.setSum(cart.getQuantity() * request.getPrice());
         } else {
             cart = new Cart();
-            cart.setUsername(username);
+            cart.setUserId(userId);
             cart.setProductName(request.getProductName());
             cart.setQuantity(request.getQuantity());
             cart.setPrice(request.getPrice());
@@ -42,17 +42,11 @@ public class CartService {
                 .build();
     }
 
-    public List<Cart> getAllByUserName(String username){
-        return cartRepo.findByUsername(username);
+    public List<Cart> getCartByUserId(String userId){
+        return cartRepo.findByUserId(userId);
     }
 
 
 
-    public void checkout(String username) {
-//        List<Cart> userCart = cartRepo.findByUsername(username);
-//        float fotalAmount = userCart.stream().map(cart -> cart.getSum()).reduce(0f, Float::sum);
-//
-//        Order order = new Order();
-//        order.setUser(new User(username));
-    }
+
 }

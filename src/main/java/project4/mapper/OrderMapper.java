@@ -10,7 +10,6 @@ public interface OrderMapper {
 
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "code", ignore = true)
-    @Mapping(target = "createDate", ignore = true)
     Order createOrder(OrderRequest request);
 
 }

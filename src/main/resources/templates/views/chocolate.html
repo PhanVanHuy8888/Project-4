@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sản phẩm</title>
+    <link rel="stylesheet" type="text/css" href="/chocolate/css/bootstrap.css"/>
+    <!--slick slider stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css"/>
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet"/>
+    <!-- slick slider -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+            rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/chocolate/css/slick-theme.css"/>
+    <!-- font awesome style -->
+    <link href="/chocolate/css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- Custom styles for this template -->
+    <link href="/chocolate/css/style.css" rel="stylesheet"/>
+    <!-- responsive style -->
+    <link href="/chocolate/css/responsive.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="hero_area">
+    <div th:include="static/header :: header"></div>
+</div>
+<section style="background-color: #eee;">
+    <div class="text-center container py-5">
+        <h4 class="mt-4 mb-5"><strong>Các sản phẩm Socola</strong></h4>
+        <div class="row" id="productContainer">
+
+        </div>
+    </div>
+</section>
+
+<div th:include="static/footer :: footer"></div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetchProducts();
+    });
+
+    async function fetchProducts() {
+        try {
+            const response = await fetch('/chocolate/product/list');
+            const products = await response.json();
+            const productContainer = document.getElementById('productContainer');
+
+            products.forEach((product) => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('col-lg-4', 'col-md-12', 'mb-4');
+
+                // Định dạng giá bằng JavaScript
+                const formattedPrice = new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(product.price);
+
+                productCard.innerHTML = `
+                    <div class="card" onclick="viewProduct('${product.id}')">
+                        <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
+                            <img class="w-100" src="/chocolate/img/${product.image}" alt="${product.name}">
+
+                        </div>
+                        <div class="card-body">
+                            <a href="#" class="text-reset">
+                                <h5 class="card-title mb-3">${product.name}</h5>
+                            </a>
+                            <a href="#" class="text-reset">
+                                <p>${product.categoryName}</p>
+                            </a>
+                            <h6 class="mb-3">
+                                <span class="text-black rounded-pill py-2 px-3 font-weight-bold">
+                                    ${formattedPrice}
+                                </span>
+                            </h6>
+                        </div>
+                    </div>
+                `;
+
+                productContainer.appendChild(productCard);
+            });
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
+    }
+
+
+    async function viewProduct(id) {
+        window.location.href = `/chocolate/viewProduct?id=${id}`;
+    }
+
+</script>
+</body>
+</html>
