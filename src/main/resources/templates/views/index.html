@@ -346,7 +346,7 @@
 
     async function fetchProducts() {
         try {
-            const response = await fetch('/chocolate/product/list');
+            const response = await fetch('/chocolate/api/product/list');
             const products = await response.json();
             const productContainer = document.getElementById('productContainer');
 

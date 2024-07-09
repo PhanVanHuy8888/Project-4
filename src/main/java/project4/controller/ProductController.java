@@ -1,5 +1,6 @@
 package project4.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,10 +11,11 @@ import project4.service.ProductService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/product")
+@RequiredArgsConstructor
 public class ProductController {
-    @Autowired
-    private ProductService productService;
+
+    private final ProductService productService;
 
     @GetMapping("/list")
     public List<ProductResponse> getAll() {

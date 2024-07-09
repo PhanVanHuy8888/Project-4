@@ -1,5 +1,6 @@
 package project4.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project4.dto.request.CartRequest;
@@ -14,10 +15,10 @@ import project4.repository.CartRepo;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CartService {
 
-    @Autowired
-    private CartRepo cartRepo;
+    private final CartRepo cartRepo;
 
     public CartReponse addCart(CartRequest request, String userId) {
         Cart cart = cartRepo.findCartByProductName(request.getProductName());

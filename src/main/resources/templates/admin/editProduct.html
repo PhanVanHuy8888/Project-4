@@ -7,7 +7,7 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script>
         async function fetchCategories() {
-            const response = await fetch("/chocolate/cate/listCate");
+            const response = await fetch("/chocolate/api/cate/listCate");
             if (response.ok) {
                 const categories = await response.json();
                 const categorySelect = document.getElementById("category");
@@ -24,7 +24,7 @@
 
         async function loadProductDetails(productId) {
             try {
-                const response = await fetch(`/chocolate/product/${productId}`);
+                const response = await fetch(`/chocolate/api/product/${productId}`);
                 if (response.ok) {
                     const product = await response.json();
                     document.getElementById("name").value = product.name;
@@ -71,7 +71,7 @@
             }
 
             try {
-                const response = await fetch(`/chocolate/product/${productId}`, {
+                const response = await fetch(`/chocolate/api/product/${productId}`, {
                     method: "PUT",
                     body: formData
                 });

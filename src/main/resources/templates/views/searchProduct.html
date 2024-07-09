@@ -81,7 +81,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const query = urlParams.get('query');
         if (query) {
-            fetch(`/chocolate/product/search/${query}`)
+            fetch(`/chocolate/api/product/search/${query}`)
                 .then(response => response.json())
                 .then(data => {
                     const resultsContainer = document.getElementById('results');
@@ -117,8 +117,8 @@
     });
 
     // Function to handle product view click
-    function viewProduct(productId) {
-        window.location.href = `/product/${productId}`;
+    async function viewProduct(id) {
+        window.location.href = `/chocolate/viewProduct?id=${id}`;
     }
 
     // Search form submission handling

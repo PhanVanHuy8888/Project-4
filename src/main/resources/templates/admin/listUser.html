@@ -26,7 +26,7 @@
         });
 
         async function fetchUsers() {
-            const response = await fetch('/chocolate/users/listUser');
+            const response = await fetch('/chocolate/api/users/listUser');
             const users = await response.json();
             const tableBody = document.getElementById('userTableBody');
             tableBody.innerHTML = ''; // Clear existing rows
@@ -52,7 +52,7 @@
             console.log('User ID to delete:', id);
             if (confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) {
                 try {
-                    const response = await fetch(`/chocolate/users/${id}`, {
+                    const response = await fetch(`/chocolate/api/users/${id}`, {
                         method: 'DELETE'
                     });
 

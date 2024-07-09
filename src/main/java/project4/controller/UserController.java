@@ -1,5 +1,6 @@
 package project4.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +13,11 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
+    private final UserService userService;
 
     @PostMapping
     public UserResponse createUser(@RequestBody UserRequest request) {

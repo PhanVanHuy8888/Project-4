@@ -15,7 +15,7 @@
 
         async function loadCateDetails(cateId) {
             try {
-                const response = await fetch(`/chocolate/cate/${cateId}`);
+                const response = await fetch(`/chocolate/api/cate/${cateId}`);
                 if (response.ok) {
                     const cate = await response.json();
                     if (cate && cate.name) {
@@ -41,7 +41,7 @@
             };
 
             try {
-                const response = await fetch(`/chocolate/cate/${cateId}`, {
+                const response = await fetch(`/chocolate/api/cate/${cateId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'

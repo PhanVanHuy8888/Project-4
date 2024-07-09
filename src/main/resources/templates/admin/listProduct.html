@@ -27,7 +27,7 @@
 
         async function fetchProduct() {
             try {
-                const response = await fetch('/chocolate/product/list');
+                const response = await fetch('/chocolate/api/product/list');
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
                 }
@@ -62,7 +62,7 @@
             console.log('Product ID to delete:', id);
             if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')) {
                 try {
-                    const response = await fetch(`/chocolate/product/${id}`, {
+                    const response = await fetch(`/chocolate/api/product/${id}`, {
                         method: 'DELETE'
                     });
 

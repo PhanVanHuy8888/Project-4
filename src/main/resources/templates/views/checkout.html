@@ -102,7 +102,7 @@
 
     async function fetchCart() {
         try {
-            const response = await fetch('/chocolate/cart/listCart');
+            const response = await fetch('/chocolate/api/cart/listCart');
             const cart = await response.json();
             const cartList = document.getElementById('cartList');
             const totalAmountElement = document.getElementById('totalAmount');
@@ -147,7 +147,7 @@
 
     async function fetchUserData() {
         try {
-            const response = await fetch('/chocolate/users/getUser');
+            const response = await fetch('/chocolate/api/users/getUser');
             const data = await response.json();
 
             if (data) {

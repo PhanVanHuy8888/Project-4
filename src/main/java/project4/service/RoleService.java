@@ -1,5 +1,6 @@
 package project4.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project4.dto.request.RoleRequest;
@@ -11,12 +12,11 @@ import project4.repository.RoleRepo;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RoleService {
-    @Autowired
-    private RoleRepo roleRepo;
+    private final RoleRepo roleRepo;
 
-    @Autowired
-    private RoleMapper roleMapper;
+    private final RoleMapper roleMapper;
 
     public RoleResponse createRole(RoleRequest request) {
         Role role = roleMapper.createRole(request);

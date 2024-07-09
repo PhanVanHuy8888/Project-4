@@ -15,7 +15,7 @@
 
         async function loadUserDetails(userId) {
             try {
-                const response = await fetch(`/chocolate/users/${userId}`);
+                const response = await fetch(`/chocolate/api/users/${userId}`);
                 const user = await response.json();
                 document.getElementById("userName").value = user.userName;
                 document.getElementById("email").value = user.email;
@@ -51,7 +51,7 @@
                 roles
             };
 
-            const response = await fetch(`/chocolate/users/${userId}`, {
+            const response = await fetch(`/chocolate/api/users/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

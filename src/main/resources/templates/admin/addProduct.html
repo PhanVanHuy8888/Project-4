@@ -11,7 +11,7 @@
     />
     <script>
         async function fetchCategories() {
-            const response = await fetch("/chocolate/cate/listCate");
+            const response = await fetch("/chocolate/api/cate/listCate");
             if (response.ok) {
                 const categories = await response.json();
                 const categorySelect = document.getElementById("category");
@@ -47,7 +47,7 @@
             }
 
             try {
-                const response = await fetch("/chocolate/product", {
+                const response = await fetch("/chocolate/api/product", {
                     method: "POST",
                     body: formData
                 });

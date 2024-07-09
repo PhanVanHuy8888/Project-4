@@ -1,5 +1,6 @@
 package project4.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import project4.dto.request.RoleRequest;
@@ -9,10 +10,10 @@ import project4.service.RoleService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/roles")
+@RequestMapping("/api/roles")
+@RequiredArgsConstructor
 public class RoleController {
-    @Autowired
-    private RoleService roleService;
+    private final RoleService roleService;
 
     @PostMapping
     public RoleResponse createRole(@RequestBody RoleRequest request) {

@@ -26,7 +26,7 @@
         });
 
         async function fetchCate() {
-            const response = await fetch('/chocolate/cate/listCate');
+            const response = await fetch('/chocolate/api/cate/listCate');
             const cate = await response.json();
             const tableBody = document.getElementById('cateTableBody');
             tableBody.innerHTML = ''; // Clear existing rows
@@ -49,7 +49,7 @@
             console.log('Category ID to delete:', id);
             if (confirm('Bạn có chắc chắn muốn xóa loại sản phẩm này không?')) {
                 try {
-                    const response = await fetch(`/chocolate/cate/${id}`, {
+                    const response = await fetch(`/chocolate/api/cate/${id}`, {
                         method: 'DELETE'
                     });
 

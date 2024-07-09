@@ -1,5 +1,6 @@
 package project4.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import project4.dto.request.CategoryRequest;
@@ -9,11 +10,11 @@ import project4.service.CategoryService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cate")
+@RequestMapping("/api/cate")
+@RequiredArgsConstructor
 public class CateController {
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @GetMapping("/{id}")
     public CategoryResponse getById(@PathVariable int id) {
