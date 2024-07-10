@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Danh sách sản phẩm</title>
+    <title>Danh sách đơn hàng</title>
 
     <link rel="apple-touch-icon" sizes="76x76" href="/chocolate/assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="/chocolate/assets/img/favicon.png">
@@ -20,11 +20,11 @@
     <link id="pagestyle" href="/chocolate/assets/css/material-dashboard.css?v=3.1.0" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+
 </head>
 <body class="g-sidenav-show bg-gray-100">
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3
-    bg-gradient-dark" id="sidenav-main">
-
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark"
+       id="sidenav-main">
     <div th:include="admin/aside :: div"></div>
 </aside>
 <main class="main-content border-radius-lg">
@@ -76,10 +76,10 @@
                 <div class="card my-4">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="mb-3 mt-2">
-                            <a href="addProduct" class="btn btn-primary">Thêm mới</a>
+                            <a href="createOrder" class="btn btn-primary">Thêm mới</a>
                         </div>
                         <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                            <h6 class="text-white text-capitalize ps-3">Danh sách sản phẩm</h6>
+                            <h6 class="text-white text-capitalize ps-3">Danh sách đơn hàng</h6>
                         </div>
                     </div>
                     <div class="card-body px-0 pb-2">
@@ -89,23 +89,20 @@
                                 <tr>
                                     <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7">#</th>
                                     <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Tên
+                                        Mã đơn hàn
                                     </th>
                                     <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Ảnh
+                                        Tên khách hàng
                                     </th>
-                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Số
-                                        lượng
-                                    </th>
-                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Mô
-                                        tả
+                                    <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Trang thái đơn
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Thao tác
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody id="productTableBody">
+                                <tbody id="orderTableBody">
                                 <!-- Rows will be populated by JavaScript -->
                                 </tbody>
                             </table>
@@ -116,86 +113,37 @@
         </div>
     </div>
 </main>
-<!--<script>-->
-<!--    // Load aside.html content into the aside element-->
-<!--    document.addEventListener('DOMContentLoaded', function() {-->
-<!--        fetch('aside.html')-->
-<!--            .then(response => response.text())-->
-<!--            .then(data => {-->
-<!--                document.querySelector('aside').innerHTML = data;-->
-<!--            })-->
-<!--            .catch(error => console.error('Error loading aside.html:', error));-->
-<!--    });-->
-<!--</script>-->
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        fetchProduct();
+        fetchOrders();
     });
 
-    async function fetchProduct() {
-        try {
-            const response = await fetch('/chocolate/api/product/list');
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            const product = await response.json();
-            console.log(product); // Kiểm tra dữ liệu trả về từ server
-            const tableBody = document.getElementById('productTableBody');
-            tableBody.innerHTML = ''; // Clear existing rows
+    async function fetchOrders() {
+        const response = await fetch('/chocolate/api/orders/list');
+        const orders = await response.json();
+        const tableBody = document.getElementById('orderTableBody');
+        tableBody.innerHTML = ''; // Clear existing rows
 
-            product.forEach((product, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
+        orders.forEach((order, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
                     <td class="text-center">${index + 1}</td>
-                    <td class="text-center">${product.name}</td>
+                    <td class="text-center">${order.code}</td>
+                    <td class="text-center">${order.customerName}</td>
+                    <td class="text-center">${order.status}</td>
                     <td class="text-center">
-                        <img src="/chocolate/img/${product.image}" width="100" alt="${product.name}" onerror="this.onerror=null;this.src='default.jpg';">
-                    </td>
-                    <td class="text-center">${product.quantity}</td>
-                    <td class="text-center truncated">${product.description}</td>
-                    <td class="text-center">
-                        <button class="btn btn-primary" onclick="editProduct('${product.id}')">Sửa</button>
-                        <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">Xóa</button>
+                        <button class="btn btn-success" onclick="updateOrder('${order.id}')">
+                        <i class="fa-solid fa-eye"></i></button>
                     </td>
                 `;
-                tableBody.appendChild(row);
-            });
-        } catch (error) {
-            console.error('Fetch error:', error);
-        }
-    }
-
-    async function deleteProduct(id) {
-        console.log('Product ID to delete:', id);
-        if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')) {
-            try {
-                const response = await fetch(`/chocolate/api/product/${id}`, {
-                    method: 'DELETE'
-                });
-
-                if (response.ok) {
-                    alert('Product has been deleted');
-                    fetchProduct(); // Refresh the list
-                } else {
-                    const errorMessage = await response.text();
-                    alert('Error deleting product: ' + errorMessage);
-                }
-            } catch (error) {
-                console.error('Error deleting product:', error);
-                alert('Error deleting product: ' + error.message);
-            }
-        }
-    }
-
-    async function editProduct(id) {
-        window.location.href = `/chocolate/updateProduct?id=${id}`;
+            tableBody.appendChild(row);
+        });
     }
 
 
-    document.addEventListener('DOMContentLoaded', fetchProduct);
-
-
+    async function updateOrder(orderId) {
+        window.location.href = `/chocolate/viewOrderDetail?id=${orderId}`;
+    }
 </script>
 </body>
 </html>

@@ -56,4 +56,14 @@ public class AdminController {
     public String createCate(){
         return "admin/createCate";
     }
+
+    @GetMapping("/listOrder")
+    public String getAllOrder() {
+        return "admin/listOrder";
+    }
+
+    @GetMapping("/viewOrderDetail")
+    public String viewOrderDetail() {
+        return "admin/viewOrderDetail";
+    }
 }

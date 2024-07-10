@@ -59,5 +59,10 @@ public class OrderService {
         cartRepo.deleteCartByUserId(userId);
         return OrderReponse.builder().build();
     }
+
+    public List<OrderReponse> getAll() {
+
+        return  orderRepo.findAll().stream().map(orderMapper::toOrder).toList();
+    }
 }
 
