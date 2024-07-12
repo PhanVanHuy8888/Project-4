@@ -23,15 +23,30 @@
     <link href="/chocolate/css/style.css" rel="stylesheet"/>
     <!-- responsive style -->
     <link href="/chocolate/css/responsive.css" rel="stylesheet"/>
+    <style>
+        .slider-container img {
+            width: 100%;
+            height: auto; /* Đảm bảo ảnh luôn hiển thị với chiều cao tự động */
+            object-fit: cover; /* Cắt ảnh để vừa khung mà không bị méo mó */
+        }
+    </style>
 </head>
 <body>
-<div class="hero_area">
-    <div th:include="static/header :: header"></div>
-</div>
+<div th:include="static/header :: header"></div>
+
+<section class="slider">
+    <div class="slider-container">
+        <div><img style="height: 600px;" src="images/6.jpg" alt="Image 1"></div>
+
+    </div>
+</section>
+
+
 <section style="background-color: #eee;">
     <div class="text-center container py-5">
         <h4 class="mt-4 mb-5"><strong>Các sản phẩm Socola</strong></h4>
         <div class="row" id="productContainer">
+
 
         </div>
     </div>

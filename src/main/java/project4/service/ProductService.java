@@ -100,7 +100,7 @@ public class ProductService {
         Path filePath = Paths.get(uploadDir, uniqueFileName);
         Files.copy(image.getInputStream(), filePath);
         System.out.println(filePath.toString());
-        return uniqueFileName;
+        return  uniqueFileName;
     }
 
     public List<ProductResponse> searchProduct(String name) {
